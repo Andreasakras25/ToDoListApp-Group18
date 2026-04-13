@@ -1,8 +1,11 @@
-## Release v1.1 - Beta
+# ToDoListApp v1.1
 
-This is the first beta release of our ToDo List application.
+Second release with new features and improvements.
 
-### Changes in this release:
-- Added export to PDF/CSV functionality (AB#20)
-- Implemented dark/light mode toggle
+### What is included in v1.1:
+- Export tasks to PDF and CSV
+- Dark / Light mode toggle
 - Improved mobile responsiveness
+- User authentication basics (login/logout)
+
+This release builds upon v1.0.1 Beta by adding core features developed during the project.
