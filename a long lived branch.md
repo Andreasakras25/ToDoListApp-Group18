@@ -1,4 +1,4 @@
-# v1.1 (a long-lived branch)
+# v1.1
 
 Second release with new features and improvements.
 
