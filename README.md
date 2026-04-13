@@ -1,4 +1,4 @@
-# ToDoListApp v1.1
+# v1.1
 
 Second release with new features and improvements.
 
