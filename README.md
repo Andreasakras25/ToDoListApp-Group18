@@ -8,5 +8,7 @@ Second release with new features and improvements.
 - Improved mobile responsiveness
 - User authentication basics (login/logout)
 - Task Priority levels (high,medium,low)
+### Mobile support
+-Optimized for mobile devices and small screens.
 
 This release builds upon v1.0.1 Beta by adding core features developed during the project.
