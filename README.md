@@ -7,5 +7,6 @@ Second release with new features and improvements.
 - Dark / Light mode toggle
 - Improved mobile responsiveness
 - User authentication basics (login/logout)
+- Task Priority levels (high,medium,low)
 
 This release builds upon v1.0.1 Beta by adding core features developed during the project.
