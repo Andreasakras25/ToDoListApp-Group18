@@ -9,3 +9,5 @@ Second release with new features and improvements.
 - User authentication basics (login/logout)
 
 This release builds upon v1.0.1 Beta by adding core features developed during the project.
+
+test
