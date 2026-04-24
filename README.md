@@ -8,4 +8,4 @@ Second release with new features and improvements.
 - Improved mobile responsiveness
 - User authentication basics (login/logout)
 
-This release builds upon v1.0.1 Beta by adding core features developed during the project.
+This release builds upon v1.0.1 Beta by adding core features developed during the project.k
