@@ -1,0 +1,65 @@
+name: Label & comment issues #the name of the workflow
+on:
+  issues:
+    types:
+      - reopened
+      - opened
+      - closed # Lisätty: triggeröi kun issue suljetaan
+  pull_request:
+    types:
+      - opened # Lisätty: triggeröi kun uusi PR luodaan
+
+jobs:
+  label_and_comment:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      # 1. Alkuperäinen pohja: Leimojen lisäys (kun issue avataan)
+      - name: attach label to issues
+        if: github.event.action == 'opened' || github.event.action == 'reopened'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ["issue", "fix"]
+            })
+
+      # 2. Alkuperäinen pohja: Tervetulokommentti uudelle issuella
+      - name: Comment on new issue
+        if: github.event.action == 'opened'
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Thanks for opening this issue! We'll take a look as soon as possible.
+
+      # 3. OPISKELIJA 2: Automaattinen kommentti kun issue suljetaan
+      - name: Comment on closed issue
+        if: github.event.action == 'closed'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'The issue is now resolved.'
+            })
+
+      # 4. OPISKELIJA 3: Onnitteluviesti ensimmäisestä Pull Requestista
+      - name: Congratulate on PR
+        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Congratulations on opening your first Pull Request! 🚀'
+            })
