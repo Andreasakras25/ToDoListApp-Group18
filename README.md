@@ -1,6 +1,7 @@
 # v1.1
 
 Second release with new features and improvements.
+-
 
 ### What is included in v1.1:
 - Export tasks to PDF and CSV
