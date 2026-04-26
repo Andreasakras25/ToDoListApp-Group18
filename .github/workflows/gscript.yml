@@ -4,10 +4,10 @@ on:
     types:
       - reopened
       - opened
-      - closed # Lisätty: triggeröi kun issue suljetaan
+      - closed
   pull_request:
     types:
-      - opened # Lisätty: triggeröi kun uusi PR luodaan
+      - opened
 
 jobs:
   label_and_comment:
@@ -16,9 +16,9 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      # 1. Alkuperäinen pohja: Leimojen lisäys (kun issue avataan)
+      # 1. Leimojen lisäys (Vain kun ISSUE avataan)
       - name: attach label to issues
-        if: github.event.action == 'opened' || github.event.action == 'reopened'
+        if: github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened')
         uses: actions/github-script@v6
         with:
           script: |
@@ -29,18 +29,22 @@ jobs:
               labels: ["issue", "fix"]
             })
 
-      # 2. Alkuperäinen pohja: Tervetulokommentti uudelle issuella
+      # 2. Tervetulokommentti (Vain kun ISSUE avataan)
       - name: Comment on new issue
-        if: github.event.action == 'opened'
-        uses: peter-evans/create-or-update-comment@v1
+        if: github.event_name == 'issues' && github.event.action == 'opened'
+        uses: actions/github-script@v6
         with:
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            Thanks for opening this issue! We'll take a look as soon as possible.
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "Thanks for opening this issue! We'll take a look as soon as possible."
+            })
 
-      # 3. OPISKELIJA 2: Automaattinen kommentti kun issue suljetaan
+      # 3. OPISKELIJA 2: Automaattinen kommentti kun ISSUE suljetaan
       - name: Comment on closed issue
-        if: github.event.action == 'closed'
+        if: github.event_name == 'issues' && github.event.action == 'closed'
         uses: actions/github-script@v6
         with:
           script: |
@@ -51,15 +55,15 @@ jobs:
               body: 'The issue is now resolved.'
             })
 
-      # 4. OPISKELIJA 3: Onnitteluviesti ensimmäisestä Pull Requestista
+      # 4. OPISKELIJA 3: Onnitteluviesti kun uusi PR avataan
       - name: Congratulate on PR
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
         uses: actions/github-script@v6
         with:
           script: |
             github.rest.issues.createComment({
-              issue_number: context.issue.number,
+              issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Congratulations on opening your first Pull Request! 🚀'
+              body: 'Congratulations on opening your first Pull Request! '
             })
