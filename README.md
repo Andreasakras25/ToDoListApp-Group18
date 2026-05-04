@@ -10,4 +10,4 @@ Second release with new features and improvements.
 
 This release builds upon v1.0.1 Beta by adding core features developed during the project.
 
-Testing for docker
+Testing for docker!
