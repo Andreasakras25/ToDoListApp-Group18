@@ -26,8 +26,9 @@ jobs:
           docker tag ${{ secrets.ACR_LOGIN_SERVER }}/todolistapp:${{ github.sha }} ${{ secrets.ACR_LOGIN_SERVER }}/todolistapp:latest
           docker push ${{ secrets.ACR_LOGIN_SERVER }}/todolistapp:latest
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure Web App (Managed Identity)
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           images: ${{ secrets.ACR_LOGIN_SERVER }}/todolistapp:latest
+          resource-group-name: RG-ToDoList18   # vaihda jos sinun RG-nimi on erilainen
