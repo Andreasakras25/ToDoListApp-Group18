@@ -27,4 +27,4 @@ jobs:
           docker push ${{ secrets.ACR_LOGIN_SERVER }}/todolistapp:latest
 
       - name: Show success message
-        run: echo "✅ Docker image built and pushed to ACR successfully!"
+        run: echo "Docker image built and pushed to ACR successfully!"
