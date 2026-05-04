@@ -19,17 +19,12 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image to ACR
         run: |
           docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/todolistapp:${{ github.sha }} .
           docker push ${{ secrets.ACR_LOGIN_SERVER }}/todolistapp:${{ github.sha }}
           docker tag ${{ secrets.ACR_LOGIN_SERVER }}/todolistapp:${{ github.sha }} ${{ secrets.ACR_LOGIN_SERVER }}/todolistapp:latest
           docker push ${{ secrets.ACR_LOGIN_SERVER }}/todolistapp:latest
-
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
